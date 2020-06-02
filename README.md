@@ -31,9 +31,10 @@ Run
 
 ## TODO
 
-[] Implement a thread pool
-[] Implement a reddit scrapper
-[] Schedule a post every Wednesday (my dudes)
+- [x] Implement announcing function
+- [ ] Implement a thread pool
+- [ ] Implement a reddit scrapper
+- [ ] Schedule a post every Wednesday (my dudes)
 
 ## Author
 * [BadMiscuit](https://github.com/BadMiscuit) - Initial work 
