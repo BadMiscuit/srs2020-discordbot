@@ -8,6 +8,10 @@ import os
 
 client = discord.Client()
 
+@client.event
+async def on_ready():
+    print('We have logged in as {0.user.name}:{0.user.id}'.format(client))
+
 async def play(voice, filename):
     voice.play(discord.FFmpegPCMAudio(filename))
     while (True):
@@ -15,18 +19,24 @@ async def play(voice, filename):
             await voice.disconnect()
             break
     os.remove(filename)
-    return
 
-async def leave():
-    for e in client.voice_clients:
-        try:
-            if (e.is_playing()):
-                e.stop()
-                os.remove('voice_*.mp3')
-            await e.disconnect()
-            break
-        except:
-            continue
+async def leave(voice=None):
+    if (voice == None):
+        for e in client.voice_clients:
+            try:
+                if (e.is_playing()):
+                    e.stop()
+                    os.remove('voice_*.mp3')
+                await e.disconnect()
+                break
+            except:
+                continue
+    else:
+        if (voice.is_playing()):
+            voice.stop()
+            os.remove('voice_*.mp3')
+        await voice.disconnect()
+
 
 def tts(name):
     msg = "{0} a rejoint le canal".format(name)
@@ -34,10 +44,6 @@ def tts(name):
     filename = "voice_{0}.mp3".format(random.randint(0, 16))
     sound.save(filename)
     return filename
-
-@client.event
-async def on_ready():
-    print('We have logged in as {0.user.name}:{0.user.id}'.format(client))
 
 @client.event
 async def on_voice_state_update(member, before, after):
@@ -52,7 +58,7 @@ async def on_voice_state_update(member, before, after):
                 voice = await after.channel.connect()
                 await play(voice, filename)
             except discord.ClientException:
-                await leave()
+                await leave(voice)
         elif (before.channel != None and after.channel != before.channel):
             print("{0}: {1} left {2}".format(datetime.now().strftime("%d/%m/%Y %H:%M:%S"), member.name, before.channel.name))
     return
