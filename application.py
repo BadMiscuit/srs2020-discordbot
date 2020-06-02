@@ -22,6 +22,7 @@ async def leave():
         try:
             if (e.is_playing()):
                 e.stop()
+                os.remove('voice_*.mp3')
             await e.disconnect()
             break
         except:
