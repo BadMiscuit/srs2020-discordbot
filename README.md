@@ -1,8 +1,9 @@
 # DiscordBot
 
-A simple python discord bot announcing when a user joins a channel.
+A simple python discord bot announcing when a user joins a channel using Google
+TTS library and discord.py wrapper.
 
-## Pre-requisite
+## Pre-requisites
 
 * Python >= 3.6
 * ffmpeg
@@ -18,10 +19,21 @@ Set your API keys in a config.py file
 
 ```python
 touch config.py
-echo CLIENT_ID=yourclientid >> config.py
-echo TOKEN=yourtoken >> config.py
+echo "CLIENT_ID=yourclientid" >> config.py
+echo "TOKEN=yourtoken" >> config.py
 ```
 
 ## Usage
 
-Run `python3 application.py`
+Run 
+
+`python3 application.py`
+
+## TODO
+
+[] Implement a thread pool
+[] Implement a reddit scrapper
+[] Schedule a post every Wednesday (my dudes)
+
+## Author
+* [BadMiscuit](https://github.com/BadMiscuit) - Initial work 
