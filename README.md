@@ -16,11 +16,11 @@ Install the required python libraries or use a virtualenv
 
 Set your API keys in a config.py file
 
-`touch config.py
-
+```python
+touch config.py
 echo CLIENT_ID=yourclientid >> config.py
-
-echo TOKEN=yourtoken >> config.py`
+echo TOKEN=yourtoken >> config.py
+```
 
 ## Usage
 
