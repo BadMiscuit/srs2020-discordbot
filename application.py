@@ -11,14 +11,19 @@ client = discord.Client()
 @client.event
 async def on_ready():
     print('We have logged in as {0.user.name}:{0.user.id}'.format(client))
+    return
 
 async def play(voice, filename):
     voice.play(discord.FFmpegPCMAudio(filename))
     while (True):
         if not voice.is_playing():
+            try:
+                os.remove(filename)
+            except:
+                pass
             await voice.disconnect()
             break
-    os.remove(filename)
+    return
 
 async def leave(voice=None):
     if (voice == None):
@@ -27,7 +32,7 @@ async def leave(voice=None):
                 if (e.is_playing()):
                     e.stop()
                     os.remove('voice_*.mp3')
-                await e.disconnect()
+                await e.disconnect(force=True)
                 break
             except:
                 continue
@@ -35,7 +40,8 @@ async def leave(voice=None):
         if (voice.is_playing()):
             voice.stop()
             os.remove('voice_*.mp3')
-        await voice.disconnect()
+        await voice.disconnect(force=True)
+    return
 
 
 def tts(name):
@@ -47,11 +53,8 @@ def tts(name):
 
 @client.event
 async def on_voice_state_update(member, before, after):
-    if (member.id != CLIENT_ID):
+    if (not member.bot and member.id != CLIENT_ID):
         if (after.channel != None and before.channel != after.channel):
-            print("{0}: {1} joined {2}".format(
-                datetime.now().strftime("%d/%m/%Y %H:%M:%S"), 
-                member.display_name, after.channel.name))
             await leave()
             filename = tts(member.display_name)
             try:
@@ -59,8 +62,6 @@ async def on_voice_state_update(member, before, after):
                 await play(voice, filename)
             except discord.ClientException:
                 await leave(voice)
-        elif (before.channel != None and after.channel != before.channel):
-            print("{0}: {1} left {2}".format(datetime.now().strftime("%d/%m/%Y %H:%M:%S"), member.name, before.channel.name))
     return
 
 client.run(TOKEN)
