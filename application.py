@@ -5,6 +5,7 @@ from datetime import datetime
 from gtts import gTTS
 import random
 import os
+import glob
 
 client = discord.Client()
 
@@ -17,29 +18,37 @@ async def play(voice, filename):
     voice.play(discord.FFmpegPCMAudio(filename))
     while (True):
         if not voice.is_playing():
-            try:
-                os.remove(filename)
-            except:
-                pass
-            await voice.disconnect()
+            remove(filename)
+            await leave(voice)
             break
+    return
+
+def remove(filename=None):
+    if (filename == None):
+        fileList = glob.glob('voice_*.mp3')
+        for f in fileList:
+            try:
+                os.remove(f)
+            except:
+                continue
+    else:
+        try:
+            os.remove(filename)
+        except:
+            pass
     return
 
 async def leave(voice=None):
     if (voice == None):
-        for e in client.voice_clients:
-            try:
-                if (e.is_playing()):
-                    e.stop()
-                    os.remove('voice_*.mp3')
-                await e.disconnect(force=True)
+        for c in client.voice_clients:
+            if (c.is_playing()):
+                c.stop()
+            if (c.is_connected()):
+                await e.disconnect()
                 break
-            except:
-                continue
     else:
         if (voice.is_playing()):
             voice.stop()
-            os.remove('voice_*.mp3')
         await voice.disconnect(force=True)
     return
 
@@ -56,12 +65,13 @@ async def on_voice_state_update(member, before, after):
     if (not member.bot and member.id != CLIENT_ID):
         if (after.channel != None and before.channel != after.channel):
             await leave()
+            remove()
             filename = tts(member.display_name)
             try:
                 voice = await after.channel.connect()
                 await play(voice, filename)
             except discord.ClientException:
-                await leave(voice)
+                await leave()
     return
 
 client.run(TOKEN)
