@@ -19,8 +19,7 @@ def create_poll(args):
     else:
         title = ":bar_chart: {0}".format(args[0])
         for i in range (0, len(args) - 1):
-            description += ":regional_indicator_{0}: {1}\n".format(alphabet[i],
-                    args[i + 1])
+            description += "{0} {1}\n".format(alphabet[i], args[i + 1])
     embed.title, embed.description = title, description
     return embed
 
