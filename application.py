@@ -1,29 +1,35 @@
 from announcer import *
+from poll import *
 from config import *
 import discord
+from discord.ext import commands
 
-client = discord.Client()
+bot = commands.Bot(command_prefix='/')
 
-@client.event
+@bot.event
 async def on_ready():
-    print('We have logged in as {0.user.name}:{0.user.id}'.format(client))
-    return
+    print('We have logged in as {0.user.name}:{0.user.id}'.format(bot))
 
-@client.event
+@bot.event
 async def on_voice_state_update(member, before, after):
     if (not member.bot and member.id != CLIENT_ID):
         if (after.channel != None and before.channel != after.channel):
-            await leave(client)
+            await leave(bot)
             filename = tts(member.display_name)
             try:
                 print("Joining {0}".format(after.channel))
                 voice = await after.channel.connect()
                 print("Joined {0}".format(after.channel))
                 await play(voice, filename)
-                await leave(client, voice)
+                await leave(bot, voice)
             except discord.ClientException:
                 print("Already in voice")
-                await leave(client)
+                await leave(bot)
     return
 
-client.run(TOKEN)
+@bot.command()
+async def poll(ctx, *args):
+    embed = create_poll(args)
+    msg = await ctx.send(embed=embed)
+
+bot.run(TOKEN)

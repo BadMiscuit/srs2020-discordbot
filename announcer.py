@@ -19,12 +19,12 @@ async def play(voice, filename):
         filename))
     return
 
-async def leave(client, voice=None):
-    if (len(client.voice_clients) < 1):
+async def leave(bot, voice=None):
+    if (len(bot.voice_clients) < 1):
         print("Not in voice")
         return
-    if (voice == None and len(client.voice_clients) > 0):
-        voice = client.voice_clients[0]
+    if (voice == None and len(bot.voice_clients) > 0):
+        voice = bot.voice_clients[0]
     if (voice.is_playing()):
         voice.stop()
     await voice.disconnect(force=True)
