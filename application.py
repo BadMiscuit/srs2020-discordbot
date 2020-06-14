@@ -29,6 +29,8 @@ async def on_voice_state_update(member, before, after):
 
 @bot.command()
 async def poll(ctx, *args):
+    if (ctx.message.channel.id != POLL_CHANNEL):
+        return
     embed = create_poll(args)
     msg = await ctx.send(embed=embed)
     if (len(args) - 1 == 0):
@@ -37,4 +39,5 @@ async def poll(ctx, *args):
     else:
         for i in range (0, len(args) - 1):
             await msg.add_reaction(alphabet[i])
+
 bot.run(TOKEN)

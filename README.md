@@ -32,7 +32,10 @@ Run
 ## TODO
 
 - [x] Implement announcing function
-- [ ] Implement a thread pool
+- [ ] Improve multitask for announcing
+- [x] Implement a poll function
+- [ ] Add poll options
+- [ ] Display poll stats
 - [ ] Implement a reddit scrapper
 - [ ] Schedule a post every Wednesday (my dudes)
 

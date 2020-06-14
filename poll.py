@@ -13,7 +13,7 @@ def create_poll(args):
         title = "man /poll"
         description = """
         **Sondage simple :thumbsup:/:thumbsdown:**
-        poll \"Suis-je un bon bot ?\"\n
+        /poll \"Suis-je un bon bot ?\"\n
         **Sondage avec plusieurs propositions**
         /poll \"Pain au chocolat ou chocolatine ?\" \"Pain au chocolat\" \"Pain au chocolat\" """
     else:
