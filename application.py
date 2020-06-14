@@ -31,5 +31,8 @@ async def on_voice_state_update(member, before, after):
 async def poll(ctx, *args):
     embed = create_poll(args)
     msg = await ctx.send(embed=embed)
+    if (len(args) - 1 == 1):
+        msg.add_reaction(👍)
+        msg.add_reaction(👎)
 
 bot.run(TOKEN)
