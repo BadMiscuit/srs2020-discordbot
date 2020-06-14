@@ -32,7 +32,7 @@ async def poll(ctx, *args):
     embed = create_poll(args)
     msg = await ctx.send(embed=embed)
     if (len(args) - 1 == 1):
-        msg.add_reaction(👍)
-        msg.add_reaction(👎)
+        msg.add_reaction("👍")
+        msg.add_reaction("👎")
 
 bot.run(TOKEN)
