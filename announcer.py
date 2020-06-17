@@ -6,29 +6,32 @@ import os
 import time
 
 async def play(voice, filename):
-    print("[{0}]: Playing {1}".format(
+    print("[{0}]: Start playing {1}".format(
         datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
         filename))
     voice.play(discord.FFmpegPCMAudio(filename))
-    while True:
-        await asyncio.sleep(0.1)
-        if not (voice.is_playing()):
-            break
+    try:
+        i = 0.0
+        while (voice.is_playing() and voice.is_connected()):
+            time.sleep(0.1)
+            i += 0.1
+            if (voice.is_playing() and voice.is_connected()):
+                print("[{0}] Playing in {1}...".format(i, voice.channel))
+    except Exception as e:
+        print("Error playing {0}".format(filename))
     print("[{0}]: Stopped {1}".format(
-        datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
-        filename))
+            datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
+            filename))
     return
 
-async def leave(bot, voice=None):
-    if (len(bot.voice_clients) < 1):
+async def leave(voices):
+    if (len(voices) < 1):
         print("Not in voice")
         return
-    if (voice == None and len(bot.voice_clients) > 0):
-        voice = bot.voice_clients[0]
-    if (voice.is_playing()):
-        voice.stop()
-    await voice.disconnect(force=True)
-    print("Left {0}".format(voice))
+    if (voices[0].is_playing()):
+        voices[0].stop()
+    await voices[0].disconnect(force=True)
+    print("Left {0}".format(voices[0].channel))
     return
 
 def tts(name):

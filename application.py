@@ -14,17 +14,20 @@ async def on_ready():
 async def on_voice_state_update(member, before, after):
     if (not member.bot and member.id != CLIENT_ID):
         if (after.channel != None and before.channel != after.channel):
-            await leave(bot)
+            await leave(bot.voice_clients)
             filename = tts(member.display_name)
             try:
                 print("Joining {0}".format(after.channel))
                 voice = await after.channel.connect()
                 print("Joined {0}".format(after.channel))
                 await play(voice, filename)
-                await leave(bot, voice)
+                await leave(bot.voice_clients)
             except discord.ClientException:
                 print("Already in voice")
-                await leave(bot)
+                await leave(bot.voice_clients)
+            except Exception as e:
+                print(str(e))
+                await leave(bot.voice_clients)
     return
 
 @bot.command()
@@ -36,7 +39,7 @@ async def poll(ctx, *args):
     if (len(args) - 1 == 0):
         await msg.add_reaction("👍")
         await msg.add_reaction("👎")
-    else:
+    elif (len(args) - 1 >= 2):
         for i in range (0, len(args) - 1):
             await msg.add_reaction(alphabet[i])
 
