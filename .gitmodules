@@ -1,0 +1,3 @@
+[submodule "discordpy-poll"]
+	path = discordpy-poll
+	url = https://github.com/BadMiscuit/discordpy-poll
