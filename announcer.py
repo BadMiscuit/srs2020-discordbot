@@ -6,17 +6,19 @@ import os
 import time
 
 async def play(voice, filename):
+    time.sleep(0.5)
     print("[{0}]: Start playing {1}".format(
         datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
         filename))
     voice.play(discord.FFmpegPCMAudio(filename))
     try:
         i = 0.0
-        while (voice.is_playing() and voice.is_connected()):
+        while True:
+            if (not voice.is_playing() or not voice.is_connected()):
+                break
             time.sleep(0.1)
+            print("[{0}] Playing in {1}...".format(i, voice.channel))
             i += 0.1
-            if (voice.is_playing() and voice.is_connected()):
-                print("[{0}] Playing in {1}...".format(i, voice.channel))
     except Exception as e:
         print("Error playing {0}".format(filename))
     print("[{0}]: Stopped {1}".format(
