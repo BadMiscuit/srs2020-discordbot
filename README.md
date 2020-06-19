@@ -23,6 +23,17 @@ echo "CLIENT_ID=yourclientid" >> config.py
 echo "TOKEN=yourtoken" >> config.py
 ```
 
+Set the ID of the poll channel
+
+```python
+echo "POLL_CHANNEL=channelid" >> config.py
+```
+Or allow the bot to post a poll on all channels removing the lines in `applications.py`
+```python
+if (ctx.message.channel.id != POLL_CHANNEL):
+  return    
+```
+
 ## Usage
 
 Run 
@@ -31,6 +42,7 @@ Run
 
 ## TODO
 
+- [ ] Add a DB support
 - [x] Implement announcing function
 - [ ] Improve multitask for announcing
 - [x] Implement a poll function
