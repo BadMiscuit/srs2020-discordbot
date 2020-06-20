@@ -1,6 +1,6 @@
 [submodule "discordpy-poll"]
 	path = discordpy-poll
-	url = https://github.com/BadMiscuit/discordpy-poll
+	url = ssh://github.com/BadMiscuit/discordpy-poll
 [submodule "discordpy-announcer"]
 	path = discordpy-announcer
-	url = https://github.com/BadMiscuit/discordpy-announcer
+	url = ssh://github.com/BadMiscuit/discordpy-announcer
