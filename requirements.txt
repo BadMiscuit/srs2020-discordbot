@@ -2,3 +2,4 @@ discord.py
 asyncio
 gTTS
 PyNaCl
+sqlite3
