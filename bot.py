@@ -19,17 +19,29 @@ async def on_voice_state_update(member, before, after):
 
 @bot.command()
 async def poll_all(ctx, *args):
-    if (len(args) != 0):
-        await send_poll(ctx, *args, msg="@here")
-    else:
-        await send_poll(ctx, *args)
+    try:
+        if (len(args) != 0):
+            await send_poll(ctx, *args, msg="@here")
+        else:
+            await send_poll(ctx, *args)
+    except Exception as e:
+        print(str(e))
+        await ctx.message.add_reaction(ctx.guild.get_emoji("pepeangry:702518264332550156"))
 
 @bot.command()
 async def poll_add(ctx, *args):
-    await poll_add_option(ctx, *args)
+    try:
+        await poll_add_option(ctx, *args)
+    except Exception as e:
+        print(str(e))
+        await ctx.message.add_reaction(ctx.guild.get_emoji("pepeangry:702518264332550156"))
 
 @bot.command()
 async def poll(ctx, *args):
-    await send_poll(ctx, *args)
+    try:
+        await send_poll(ctx, *args)
+    except Exception as e:
+        print(str(e))
+        await ctx.message.add_reaction(ctx.guild.get_emoji("pepeangry:702518264332550156"))
 
 bot.run(TOKEN)
