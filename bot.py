@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from announcer import *
-from poll import send_poll
+from poll import send_poll, poll_add_option
 from config import *
 from announcer import announce
 import discord
@@ -16,6 +16,17 @@ async def on_ready():
 @bot.event
 async def on_voice_state_update(member, before, after):
     await announce(bot.voice_clients, member, before, after)
+
+@bot.command()
+async def poll_all(ctx, *args):
+    if (len(args) != 0):
+        await send_poll(ctx, *args, msg="@here")
+    else:
+        await send_poll(ctx, *args)
+
+@bot.command()
+async def poll_add(ctx, *args):
+    await poll_add_option(ctx, *args)
 
 @bot.command()
 async def poll(ctx, *args):
