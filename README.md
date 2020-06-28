@@ -38,7 +38,7 @@ Run
 - [x] Implement a poll function
 - [x] Add poll options
 - [ ] Display poll stats
-- [ ] Implement a reddit scrapper
+- [ ] Implement a reddit crawler
 - [ ] Schedule a post every Wednesday (my dudes)
 
 ## Author
