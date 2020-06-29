@@ -7,6 +7,7 @@ TTS library and discord.py wrapper.
 
 * Python >= 3.6
 * ffmpeg
+* sqlite3
 * a Discord bot token
 
 ## Installation
@@ -23,32 +24,21 @@ echo "CLIENT_ID=yourclientid" >> config.py
 echo "TOKEN=yourtoken" >> config.py
 ```
 
-Set the ID of the poll channel
-
-```python
-echo "POLL_CHANNEL=channelid" >> config.py
-```
-Or allow the bot to post a poll on all channels removing the lines in `applications.py`
-```python
-if (ctx.message.channel.id != POLL_CHANNEL):
-  return    
-```
-
 ## Usage
 
 Run 
 
-`python3 application.py`
+`python3 bot.py`
 
 ## TODO
 
-- [ ] Add a DB support
+- [x] Add a DB support
 - [x] Implement announcing function
 - [ ] Improve multitask for announcing
 - [x] Implement a poll function
-- [ ] Add poll options
+- [x] Add poll options
 - [ ] Display poll stats
-- [ ] Implement a reddit scrapper
+- [ ] Implement a reddit crawler
 - [ ] Schedule a post every Wednesday (my dudes)
 
 ## Author
