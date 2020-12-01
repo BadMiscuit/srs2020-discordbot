@@ -40,6 +40,8 @@ Run
 - [ ] Display poll stats
 - [ ] Implement a reddit crawler
 - [ ] Schedule a post every Wednesday (my dudes)
+- [ ] Migrate submodules to Cogs
+- [ ] Clean the repository
 
 ## Author
 * [BadMiscuit](https://github.com/BadMiscuit) - Initial work 

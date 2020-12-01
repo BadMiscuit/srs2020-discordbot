@@ -9,6 +9,9 @@ import discord
 from discord.ext import commands
 from discord.ext.commands import has_permissions
 
+import random
+import rstr
+
 bot = commands.Bot(command_prefix='/')
 
 @bot.event
@@ -47,7 +50,8 @@ async def poll_all(ctx, *args):
             await send_poll(ctx, *args)
     except Exception as e:
         print(str(e))
-        await ctx.message.add_reaction(ctx.guild.get_emoji("pepeangry:702518264332550156"))
+        await ctx.message.add_reaction(\
+                ctx.guild.get_emoji("pepeangry:702518264332550156"))
 
 @bot.command()
 async def poll_add(ctx, *args):
@@ -55,7 +59,8 @@ async def poll_add(ctx, *args):
         await poll_add_option(ctx, *args)
     except Exception as e:
         print(str(e))
-        await ctx.message.add_reaction(ctx.guild.get_emoji("pepeangry:702518264332550156"))
+        await ctx.message.add_reaction(\
+                ctx.guild.get_emoji("pepeangry:702518264332550156"))
 
 @bot.command()
 async def poll(ctx, *args):
@@ -63,7 +68,8 @@ async def poll(ctx, *args):
         await send_poll(ctx, *args)
     except Exception as e:
         print(str(e))
-        await ctx.message.add_reaction(ctx.guild.get_emoji("pepeangry:702518264332550156"))
+        await ctx.message.add_reaction(\
+                ctx.guild.get_emoji("pepeangry:702518264332550156"))
 
 @bot.listen()
 async def on_message(message):
@@ -75,7 +81,8 @@ async def on_message(message):
                 or message.content.startswith(">>play")
                 or message.content.startswith("--play")):
             try:
-                await message.channel.send("""Mauvais canal {0} {1}""".format(bot.get_channel(RIGHT_CHAN).mention, PEPEANGRY))
+                await message.channel.send("""Mauvais canal {0} {1}""".format(\
+                    bot.get_channel(RIGHT_CHAN).mention, PEPEANGRY))
             except Exception as e:
                 print(str(e))
     elif (message.content.startswith("Je suis ")):
@@ -87,4 +94,27 @@ async def on_message(message):
             print("Error in Je suis : {0}".format(str(e)))
             await message.add_reaction("\N{Cross Mark}")
 
+
+async def random_ping():
+    await bot.wait_until_ready()
+    random_delay = random.randint(120,3600)
+    guild = bot.get_guild(GUILD_ID)
+    member = guild.get_member(PING_USER)
+    while not bot.is_closed():
+        try:
+            #if (member.status == offline):
+            if False:
+                await asyncio.sleep(900)
+            else:
+                random_delay = random.randint(120, 3600)
+                channel = await guild.create_text_channel(\
+                        rstr.xeger(r'[a-z0-9\-]{15}'))
+                await channel.send("<@{0}>".format(PING_USER))
+                await asyncio.sleep(1)
+                await channel.delete()
+        except Exception as e:
+            print(str(e))
+        await asyncio.sleep(random_delay)
+
+bot.loop.create_task(random_ping())
 bot.run(TOKEN)
