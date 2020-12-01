@@ -2,6 +2,7 @@
 
 from announcer import *
 from poll import send_poll, poll_add_option
+from shifumi import send_shifumi
 from config import *
 from announcer import *
 import discord
@@ -20,6 +21,7 @@ async def on_voice_state_update(member, before, after):
         if (after.channel != None and before.channel != after.channel):
             await leave(bot.voice_clients)
             filename = tts(member.display_name)
+            print("File created")
             try:
                 voice = await after.channel.connect()
                 print("Joined {0}".format(after.channel))
@@ -29,13 +31,12 @@ async def on_voice_state_update(member, before, after):
                 print("Error trying to join {0}: Already in voice".format(after.channel))
                 await leave(bot.voice_clients)
             except Exception as e:
-                print(str(e))
+                print("Foo " + str(e))
                 await leave(bot.voice_clients)
 
 @bot.command()
-async def test(ctx, *args):
-    for r in ctx.guild.roles:
-        print("{0} {1}".format(r.id, r.name))
+async def shifumi(ctx, *args):
+    await send_shifumi(ctx, *args)
 
 @bot.command()
 async def poll_all(ctx, *args):

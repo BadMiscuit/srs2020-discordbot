@@ -4,3 +4,6 @@
 [submodule "discordpy-announcer"]
 	path = discordpy-announcer
 	url = git@github.com:BadMiscuit/discordpy-announcer.git
+[submodule "discordpy-shifumi"]
+	path = discordpy-shifumi
+	url = git@github.com:BadMiscuit/discordpy-shifumi.git
