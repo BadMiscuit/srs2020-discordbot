@@ -2,17 +2,22 @@
 
 from announcer import *
 from poll import send_poll, poll_add_option
-from shifumi import send_shifumi
 from config import *
 from announcer import *
 import discord
 from discord.ext import commands
 from discord.ext.commands import has_permissions
 
+
 import random
 import rstr
 
+import cogs.shifumi
+
 bot = commands.Bot(command_prefix='/')
+
+if __name__ == '__main__':
+    bot.load_extension('cogs.shifumi')
 
 @bot.event
 async def on_ready():
@@ -36,10 +41,6 @@ async def on_voice_state_update(member, before, after):
             except Exception as e:
                 print("Foo " + str(e))
                 await leave(bot.voice_clients)
-
-@bot.command()
-async def shifumi(ctx, *args):
-    await send_shifumi(ctx, *args)
 
 @bot.command()
 async def poll_all(ctx, *args):
@@ -94,27 +95,41 @@ async def on_message(message):
             print("Error in Je suis : {0}".format(str(e)))
             await message.add_reaction("\N{Cross Mark}")
 
-
+'''
 async def random_ping():
     await bot.wait_until_ready()
-    random_delay = random.randint(120,3600)
+    random_delay = random.randint(120,2700)
     guild = bot.get_guild(GUILD_ID)
     member = guild.get_member(PING_USER)
+    offline_delay = 300
     while not bot.is_closed():
         try:
-            #if (member.status == offline):
-            if False:
-                await asyncio.sleep(900)
+            if (member.status == "offline"):
+                offline_delay += 100
+                await asyncio.sleep(offline_delay)
             else:
-                random_delay = random.randint(120, 3600)
+                offline_delay = 300
+                random_delay = random.randint(120,1200)
+
+                overwrites = {
+                        guild.default_role: discord.PermissionOverwrite(read_messages=False),
+                        guild.me: discord.PermissionOverwrite(read_messages=True),
+                        member: discord.PermissionOverwrite(read_messages=True)
+                        }
+
                 channel = await guild.create_text_channel(\
-                        rstr.xeger(r'[a-z0-9\-]{15}'))
-                await channel.send("<@{0}>".format(PING_USER))
-                await asyncio.sleep(1)
+                        name=rstr.xeger(r'[a-z0-9\-]{15}'),\
+                        overwrites=overwrites)
+
+                await channel.send("<@{0}> t puni".format(PING_USER))
+
+                await asyncio.sleep(5)
+
                 await channel.delete()
         except Exception as e:
             print(str(e))
         await asyncio.sleep(random_delay)
 
 bot.loop.create_task(random_ping())
+'''
 bot.run(TOKEN)
