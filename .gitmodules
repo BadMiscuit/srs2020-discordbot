@@ -1,9 +1,9 @@
 [submodule "discordpy-poll"]
-	path = submodules/poll
+	path = modules/poll
 	url = git@github.com:BadMiscuit/discordpy-poll.git
 [submodule "discordpy-announcer"]
-	path = submodules/announcer
+	path = modules/announcer
 	url = git@github.com:BadMiscuit/discordpy-announcer.git
 [submodule "discordpy-shifumi"]
-	path = submodules/shifumi
+	path = modules/shifumi
 	url = git@github.com:BadMiscuit/discordpy-shifumi.git
