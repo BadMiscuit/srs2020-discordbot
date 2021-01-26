@@ -1,12 +1,17 @@
 import discord
 from discord.ext import commands
 
-from .config import GUILD_ID, POLL_CHANNEL, TEST_CHANNEL, LOGTRACE_CHANNEL
+from .config import GUILD_ID, POLL_CHANNEL, TEST_CHANNEL, LOGTRACE_CHANNEL, NULL_ID
 
 
-def srs_only():
+def guild_only():
     async def predicate(ctx):
         return ctx.guild and ctx.guild.id == GUILD_ID
+    return commands.check(predicate)
+
+def members_only():
+    async def predicate(ctx):
+        return len([role for role in message.author.roles if role.id == NULL_ID]) == 0
     return commands.check(predicate)
 
 def poll_only():

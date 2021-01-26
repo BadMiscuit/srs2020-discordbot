@@ -28,4 +28,27 @@ alphabet = ['\N{REGIONAL INDICATOR SYMBOL LETTER A}',
         '\N{REGIONAL INDICATOR SYMBOL LETTER Z}']
 
 pepeangry = [ "pepeangry", 702518264332550156 ]
-pepecry = [ "pepecry", 724980161778417696 ]
+pepecry = [ "pepecry", 702443746049916958 ]
+pepedegenere = [ "pepedegenere", 702518959223603220 ]
+pepelove = [ "pepelove", 706872631252615228 ]
+zoglu = [ "zoglu", 789166303062523963 ]
+zoglon = [ "zoglon", 723694983382695936 ]
+
+
+love = ['\N{SPARKLING HEART}',
+        '\N{REVOLVING HEARTS}',
+        '\N{GROWING HEART}',
+        '\N{BEATING HEART}',
+        '\N{TWO HEARTS}',
+        '\N{HEART WITH ARROW}',
+        '\N{HEART WITH RIBBON}',
+        '\N{ORANGE HEART}',
+        '\N{HEAVY BLACK HEART}',
+        '\N{BLUE HEART}',
+        '\N{YELLOW HEART}',
+        '\N{GREEN HEART}',
+        '\N{BLUE HEART}',
+        '\N{SMILING FACE WITH HEART-SHAPED EYES}',
+        '\N{SMILING FACE WITH SMILING EYES AND THREE HEARTS}']
+
+
