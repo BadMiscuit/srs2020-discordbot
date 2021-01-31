@@ -32,9 +32,13 @@ class GeneralCog(commands.Cog):
                         self.bot.get_channel(RIGHT_CHANNEL).mention))
                 except Exception as e:
                     await logtrace(ctx, e)
-        elif (ctx.content.lower().startswith("je suis ")):
+        elif (ctx.content.lower().startswith("je suis ") or \
+                ctx.content.lower().startswith("j'suis ")):
             try:
-                nickname = ctx.content.replace("Je suis ", "", 1).replace("je suis ", "", 1)
+                nickname = ctx.content.replace("Je suis ", "", 1)\
+                        .replace("je suis ", "", 1)\
+                        .replace("j'suis ", "", 1)\
+                        .replace("J'suis ", "", 1)
                 await ctx.author.edit(nick=nickname)
                 await ctx.add_reaction("\N{White Heavy Check Mark}")
             except Exception as e:
@@ -49,12 +53,14 @@ class GeneralCog(commands.Cog):
         elif (ctx.content.lower() in self.goodbot):
             try:
                 await ctx.reply("Merci")
-                await ctx.add_reaction(self.bot.get_emoji(random.choice([pepelove, zoglu, zoglon])[1]))
+                await ctx.add_reaction(self.bot.get_emoji(\
+                        random.choice([pepelove, zoglu, zoglon])[1]))
             except Exception as e:
                 await logtrace(ctx, e)
         elif (ctx.content.lower() in self.badbot):
             try:
-                await ctx.reply("Pourquoi <:{0}:{1}> ?".format(pepecry[0], pepecry[1]))
+                await ctx.reply(\
+                        "Pourquoi <:{0}:{1}> ?".format(pepecry[0], pepecry[1]))
                 await ctx.add_reaction(self.bot.get_emoji(pepecry[1]))
             except Exception as e:
                 await logtrace(ctx, e)
