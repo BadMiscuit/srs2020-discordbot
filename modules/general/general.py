@@ -9,7 +9,7 @@ import random
 from discord.ext.commands import has_permissions
 from utils.util import guild_only, members_only, logtrace
 from utils.config import NULL_ID, WRONG_CHANNEL, RIGHT_CHANNEL
-from utils.emojis import pepelove, zoglu, zoglon
+from utils.emojis import pepelove, zoglu, zoglon, pepecry
 
 class GeneralCog(commands.Cog):
     def __init__(self, bot):

@@ -1,6 +1,5 @@
-discord.py
+discord.py[voice]
 asyncio
 gTTS
 PyNaCl
 rstr
-shutil
