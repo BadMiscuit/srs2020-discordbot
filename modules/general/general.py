@@ -7,7 +7,7 @@ from discord.ext import commands
 import random
 
 from discord.ext.commands import has_permissions
-from utils.util import guild_only, members_only, logtrace
+from utils.util import guild_only, members_only, logtrace, owner_dm_only
 from utils.config import NULL_ID, WRONG_CHANNEL, RIGHT_CHANNEL
 from utils.emojis import pepelove, zoglu, zoglon, pepecry
 
@@ -19,10 +19,30 @@ class GeneralCog(commands.Cog):
         self.badbot = [ "bad bot", "méchant bot", "sale bot", "mauvais bot" ]
 
 
+    @owner_dm_only()
+    @commands.command(name='reply')
+    async def reply(self, ctx, *args):
+        guild = self.bot.get_guild(675329277407002624)
+        channel = guild.get_channel(int(args[0]))
+        msg = await channel.fetch_message(int(args[1]))
+        await msg.reply(args[2])
+
+    @owner_dm_only()
+    @commands.command(name='react')
+    async def react(self, ctx, *args):
+        guild = self.bot.get_guild(675329277407002624)
+        channel = guild.get_channel(int(args[0]))
+        message = await channel.fetch_message(int(args[1]))
+        await message.add_reaction(args[2])
+
+
     @commands.Cog.listener()
     @members_only()
     @guild_only()
     async def on_message(self, ctx):
+        index_jesuis = (ctx.content.lower().find("je suis ") \
+                if ctx.content.lower().find("je suis ") >= 0 \
+                else ctx.content.lower().find("j'suis "))
         if (ctx.channel.id == WRONG_CHANNEL):
             if (ctx.content.startswith("-play")
                     or ctx.content.startswith(">>play")
@@ -32,13 +52,15 @@ class GeneralCog(commands.Cog):
                         self.bot.get_channel(RIGHT_CHANNEL).mention))
                 except Exception as e:
                     await logtrace(ctx, e)
-        elif (ctx.content.lower().startswith("je suis ") or \
-                ctx.content.lower().startswith("j'suis ")):
+        elif (index_jesuis == 0):
             try:
                 nickname = ctx.content.replace("Je suis ", "", 1)\
                         .replace("je suis ", "", 1)\
                         .replace("j'suis ", "", 1)\
                         .replace("J'suis ", "", 1)
+                nickname = nickname[index_jesuis:] \
+                        if len(nickname) < 32 \
+                        else nickname[index_jesuis:index_jesuis+32]
                 await ctx.author.edit(nick=nickname)
                 await ctx.add_reaction("\N{White Heavy Check Mark}")
             except Exception as e:

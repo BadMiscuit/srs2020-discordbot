@@ -14,6 +14,12 @@ def members_only():
         return len([role for role in message.author.roles if role.id == NULL_ID]) == 0
     return commands.check(predicate)
 
+def owner_dm_only():
+    async def predicate(ctx):
+        return ctx.channel.type == discord.ChannelType.private and \
+                ctx.author.id == 194896754406064129
+    return commands.check(predicate)
+
 def poll_only():
     async def predicate(ctx):
         return ctx.channel.id == POLL_CHANNEL or ctx.channel.id == TEST_CHANNEL
