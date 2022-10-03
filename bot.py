@@ -36,8 +36,8 @@ async def main():
         for ext in extensions:
             try:
                 await load(ext)
-                await bot.start(TOKEN)
             except Exception as e:
                 print(e)
+        await bot.start(TOKEN)
 
 asyncio.run(main())
