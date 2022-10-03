@@ -2,13 +2,17 @@
 
 import discord
 import modules.shifumi.shifumi, modules.poll.poll, modules.announcer.announcer, modules.general.general, modules.webm.webm
+import asyncio
 
 from discord.ext import commands
 from utils.config import TOKEN
 from utils.emojis import *
 
+intents = discord.Intents.default()
+intents.message_content = True
 
-bot = commands.Bot(command_prefix='/')
+bot = commands.Bot(command_prefix='/',
+        intents=intents)
 
 extensions = ['modules.shifumi.shifumi',
         'modules.poll.poll',
@@ -16,12 +20,24 @@ extensions = ['modules.shifumi.shifumi',
         'modules.general.general',
         'modules.webm.webm']
 
-if __name__ == '__main__':
-    for ext in extensions:
-        bot.load_extension(ext)
-
 @bot.event
 async def on_ready():
     print('We have logged in as {0.user.name}:{0.user.id}'.format(bot))
 
-bot.run(TOKEN)
+@bot.command()
+async def load(extension_name: str):
+    try:
+        await bot.load_extension(extension_name)
+    except (AttributeError, ImportError) as e:
+        return
+
+async def main():
+    async with bot:
+        for ext in extensions:
+            try:
+                await load(ext)
+                await bot.start(TOKEN)
+            except Exception as e:
+                print(e)
+
+asyncio.run(main())

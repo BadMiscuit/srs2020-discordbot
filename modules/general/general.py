@@ -36,6 +36,14 @@ class GeneralCog(commands.Cog):
         await message.add_reaction(args[2])
 
 
+    @owner_dm_only()
+    @commands.command(name='post')
+    async def post(self, ctx, *args):
+        guild = self.bot.get_guild(675329277407002624)
+        channel = guild.get_channel(int(args[0]))
+        await channel.send(args[1])
+
+
     @commands.Cog.listener()
     @members_only()
     @guild_only()
@@ -126,5 +134,5 @@ class GeneralCog(commands.Cog):
     '''
 
 
-def setup(bot):
-    bot.add_cog(GeneralCog(bot))
+async def setup(bot):
+    await bot.add_cog(GeneralCog(bot))
