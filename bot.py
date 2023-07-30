@@ -16,9 +16,9 @@ bot = commands.Bot(command_prefix='/',
 
 extensions = ['modules.shifumi.shifumi',
         'modules.poll.poll',
-        'modules.announcer.announcer',
         'modules.general.general',
-        'modules.webm.webm']
+        'modules.webm.webm',
+        'modules.announcer.announcer']
 
 @bot.event
 async def on_ready():
